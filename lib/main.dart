@@ -1,3 +1,4 @@
+import 'package:first_project/home_screen.dart';
 import 'package:first_project/ui/register_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,8 @@ class RootScreen extends StatelessWidget {
     return MaterialApp(
       initialRoute: '/register',
       routes: {
-        '/register': (context) => const RegisterScreen()
+        '/register': (context) => const RegisterScreen(),
+        '/home': (context) => const HomeScreen() 
       },
     );
   }

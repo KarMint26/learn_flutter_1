@@ -16,6 +16,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
 
   var token = '';
+  String? _nameError;
+  String? _emailError;
+  String? _passwordErr;
 
   // Fungsi untuk melakukan registrasi
   void _register(BuildContext context) async {
@@ -23,18 +26,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
       // Mengecek apakah password dan retype password sama
       if (_passwordController.text == _retypePasswordController.text) {
         try {
-          var response = await AuthService().register(
+          final response = await AuthService().register(
             _nameController.text,
             _emailController.text,
             _passwordController.text,
           );
-          
-          // Tangani jika registrasi berhasil (misalnya dengan menampilkan pesan sukses)
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Registration successful")),
-          );
+
+          if(response["status"]){
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(response["message"])),
+            );
+
+            Navigator.pushReplacementNamed(context, '/home');
+          } else {
+            setState(() {
+              _nameError = response["error"]["name"]?[0];
+              _emailError = response["error"]["email"]?[0];
+              _passwordErr = response["error"]["password"]?[0];
+            });
+          }
         } catch (e) {
-          // Tangani jika ada error, misalnya dengan menampilkan pesan error
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text("Registration failed: $e")),
           );
@@ -63,7 +74,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             children: [
               TextFormField(
                 controller: _nameController,
-                decoration: const InputDecoration(labelText: "Name"),
+                decoration: InputDecoration(labelText: "Name", errorText: _nameError),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return "Please enter your name";
@@ -73,7 +84,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               TextFormField(
                 controller: _emailController,
-                decoration: const InputDecoration(labelText: "Email"),
+                decoration: InputDecoration(labelText: "Email", errorText: _emailError),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return "Please enter your email";
@@ -84,7 +95,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               TextFormField(
                 controller: _passwordController,
                 obscureText: true,
-                decoration: const InputDecoration(labelText: "Password"),
+                decoration: InputDecoration(labelText: "Password", errorText: _passwordErr),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return "Please enter your password";
@@ -95,7 +106,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               TextFormField(
                 controller: _retypePasswordController,
                 obscureText: true,
-                decoration: const InputDecoration(labelText: "Retype Password"),
+                decoration: InputDecoration(labelText: "Retype Password", errorText: _passwordErr),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return "Please enter retype password";
