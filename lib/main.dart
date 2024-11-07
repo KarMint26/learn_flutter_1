@@ -1,4 +1,4 @@
-import 'package:first_project/home_screen.dart';
+import 'package:first_project/ui/home_screen.dart';
 import 'package:first_project/ui/register_screen.dart';
 import 'package:flutter/material.dart';
 
