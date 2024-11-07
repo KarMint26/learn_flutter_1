@@ -1,11 +1,14 @@
 import 'dart:convert';
 
 import 'package:first_project/models/response_model.dart';
+import 'package:first_project/services/session_service.dart';
 import 'package:http/http.dart' as http;
 
 const String baseUrl = 'https://recipe.incube.id/api';
 
 class AuthService {
+  final SessionService _sessionService = SessionService();
+
   Future<Map<String, dynamic>> register(String name, String email, String password) async{
     final response = await http.post(
       Uri.parse('$baseUrl/register'),
@@ -18,6 +21,14 @@ class AuthService {
 
     if(response.statusCode == 201){
       var res = ResponseModel.fromJson(jsonDecode(response.body));
+
+      await _sessionService.saveToken(res.data["token"]);
+
+      await _sessionService.saveUser(
+        res.data["user"]["id"].toString(),
+        res.data["user"]["name"],
+        res.data["user"]["email"]
+      );
 
       return {
         "status": true,
