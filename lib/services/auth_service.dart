@@ -16,8 +16,22 @@ class AuthService {
       }
     );
 
-    var res = ResponseModel.fromJson(jsonDecode(response.body));
-    
-    return res;
+    if(response.statusCode == 201){
+      var res = ResponseModel.fromJson(jsonDecode(response.body));
+
+      return {
+        "status": true,
+        "message": res.message,
+      };
+    } else if(response.statusCode == 422){
+      var res = ResponseModel.fromJson(jsonDecode(response.body));
+
+      return {
+        "status": true,
+        "message": res.message,
+      };
+    } else {
+      throw Exception("Filaed Register");
+    }
   }
 }

@@ -22,17 +22,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (_formKey.currentState!.validate()) {
       // Mengecek apakah password dan retype password sama
       if (_passwordController.text == _retypePasswordController.text) {
-        // Menunggu respons dari API dan menangani hasilnya
         try {
           var response = await AuthService().register(
             _nameController.text,
             _emailController.text,
             _passwordController.text,
           );
-
-          setState(() {
-            token = response.data.token;
-          });
           
           // Tangani jika registrasi berhasil (misalnya dengan menampilkan pesan sukses)
           ScaffoldMessenger.of(context).showSnackBar(
