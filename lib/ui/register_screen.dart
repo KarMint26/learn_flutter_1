@@ -55,18 +55,41 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 decoration: const InputDecoration(
                   labelText: "Email"
                 ),
+                validator: (value) {
+                  if(value == null || value.isEmpty){
+                    return "Please enter your email";
+                  }
+          
+                  return null;
+                },
               ),
               TextFormField(
                 controller: _passwordController,
+                obscureText: true,
                 decoration: const InputDecoration(
                   labelText: "Password"
                 ),
+                validator: (value) {
+                  if(value == null || value.isEmpty){
+                    return "Please enter your password";
+                  }
+          
+                  return null;
+                },
               ),
               TextFormField(
                 controller: _retypePasswordController,
+                obscureText: true,
                 decoration: const InputDecoration(
                   labelText: "Retype Password"
                 ),
+                validator: (value) {
+                  if(value == null || value.isEmpty){
+                    return "Please enter retype password";
+                  }
+          
+                  return null;
+                },
               ),
               ElevatedButton(
                 onPressed: (){
