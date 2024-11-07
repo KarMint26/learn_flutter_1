@@ -15,6 +15,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _retypePasswordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
+  var token = '';
+
   // Fungsi untuk melakukan registrasi
   void _register(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
@@ -27,6 +29,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
             _emailController.text,
             _passwordController.text,
           );
+
+          setState(() {
+            token = response.data.token;
+          });
           
           // Tangani jika registrasi berhasil (misalnya dengan menampilkan pesan sukses)
           ScaffoldMessenger.of(context).showSnackBar(
@@ -108,6 +114,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 },
                 child: const Text("Register"),
               ),
+              Text(token)
             ],
           ),
         ),

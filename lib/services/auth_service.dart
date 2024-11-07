@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:first_project/models/response_model.dart';
 import 'package:http/http.dart' as http;
 
 const String baseUrl = 'https://recipe.incube.id/api';
@@ -13,6 +16,8 @@ class AuthService {
       }
     );
 
-    print(response.body);
+    var res = ResponseModel.fromJson(jsonDecode(response.body));
+    
+    return res;
   }
 }
