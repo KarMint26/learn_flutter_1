@@ -1,3 +1,4 @@
+import 'package:first_project/ui/login_screen.dart';
 import 'package:first_project/ui/home_screen.dart';
 import 'package:first_project/ui/register_screen.dart';
 import 'package:flutter/material.dart';
@@ -12,9 +13,10 @@ class RootScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/register',
+      initialRoute: '/login',
       routes: {
         '/register': (context) => const RegisterScreen(),
+        '/login': (context) => const LoginScreen(),
         '/home': (context) => const HomeScreen() 
       },
     );
