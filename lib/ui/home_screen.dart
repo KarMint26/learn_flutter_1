@@ -18,11 +18,42 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.blue[200],
         title: const Text("Home"),
       ),
-      body: ElevatedButton(
-        onPressed: () async{
-          print(await _sessionService.getToken());
-        }, 
-        child: const Text("Show Token")
+      body: Card(
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        child: Column(
+          children: [
+            Image.network(
+              "https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+              fit: BoxFit.cover,
+              width: double.infinity,
+              height: 100,
+            ),
+            Text(
+              "Judul",
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Row(
+                  children: [
+                    Icon(Icons.star),
+                    Text("0")
+                  ],
+                ),
+                Row(
+                  children: [
+                    Icon(Icons.comment),
+                    Text("0")
+                  ],
+                )
+              ],
+            )
+          ],
+        ),
       )
     );
   }
