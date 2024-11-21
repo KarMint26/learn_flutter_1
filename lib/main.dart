@@ -17,7 +17,7 @@ class RootScreen extends StatelessWidget {
       routes: {
         '/register': (context) => const RegisterScreen(),
         '/login': (context) => const LoginScreen(),
-        '/home': (context) => const HomeScreen() 
+        '/home': (context) => HomeScreen() 
       },
     );
   }
