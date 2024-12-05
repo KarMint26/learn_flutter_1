@@ -30,4 +30,26 @@ class RecipeService {
     }
 
   }
+
+  Future<RecipeModel> getRecipeById(int id) async {
+    final token = await _sessionService.getToken();
+    if (token == null || token.isEmpty) {
+      print("Tidak ada token");
+    }
+
+    final response = await http.get(
+      Uri.parse('$baseUrl/recipes/$id'),
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json'
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body)['data'];
+      return RecipeModel.fromJson(data);
+    } else {
+      throw Exception('Gagal load data');
+    }
+  }
 }

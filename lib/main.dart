@@ -1,3 +1,4 @@
+import 'package:first_project/ui/detail_screen.dart';
 import 'package:first_project/ui/login_screen.dart';
 import 'package:first_project/ui/home_screen.dart';
 import 'package:first_project/ui/register_screen.dart';
@@ -17,7 +18,8 @@ class RootScreen extends StatelessWidget {
       routes: {
         '/register': (context) => const RegisterScreen(),
         '/login': (context) => const LoginScreen(),
-        '/home': (context) => HomeScreen() 
+        '/home': (context) => HomeScreen(),
+        '/detail': (context) => const DetailScreen(recipeId: 1)
       },
     );
   }

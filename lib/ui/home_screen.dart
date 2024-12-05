@@ -1,6 +1,6 @@
 import 'package:first_project/services/recipes_service.dart';
-import 'package:first_project/services/session_service.dart';
 import 'package:first_project/models/recipes_model.dart';
+import 'package:first_project/ui/detail_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -58,11 +58,12 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class CustomCard extends StatelessWidget {
-  String title;
-  String img;
-  int likes_count;
-  int comments_count;
-  int id;
+  final int id;
+  final String title;
+  final String img;
+  final int likes_count;
+  final int comments_count;
+
   CustomCard({
     required this.id,
     required this.title,
@@ -75,32 +76,45 @@ class CustomCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // nagitor push
-        print(id);
+        // Navigasi ke halaman detail, kirimkan ID resep
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailScreen(recipeId: id),
+          ),
+        );
       },
       child: Card(
         clipBehavior: Clip.antiAliasWithSaveLayer,
         child: Column(
           children: [
             Image.network(
-              "$img",
+              img,
               fit: BoxFit.cover,
               width: double.infinity,
               height: 100,
-              ),
-            Text("$title", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+            ),
+            Text(
+              title,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-              Row(children: [
-                Icon(Icons.star),
-                Text("$likes_count")
-              ],),
-              Row(children: [
-                Icon(Icons.comment),
-                Text("$comments_count")
-              ],),
-            ],)
+                Row(
+                  children: [
+                    Icon(Icons.star),
+                    Text("$likes_count"),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Icon(Icons.comment),
+                    Text("$comments_count"),
+                  ],
+                ),
+              ],
+            ),
           ],
         ),
       ),
